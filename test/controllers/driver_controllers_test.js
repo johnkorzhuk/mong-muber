@@ -21,7 +21,7 @@ describe('Drivers controller', () => {
   })
 
   it('PUT requests to /api/drivers edits an existing driver', (done) => {
-    const driver = new Driver({ email: 'old@test.com' })
+    const driver = new Driver({ email: 'old@test.com', driving: false })
     const newEmail = 'new@test.com'
 
     driver.save().then(() => {
