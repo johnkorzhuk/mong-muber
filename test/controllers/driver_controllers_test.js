@@ -20,7 +20,7 @@ describe('Drivers controller', () => {
     })
   })
 
-  it('PUT requests to /api/drivers edits an existing driver', (done) => {
+  it('PUT requests to /api/drivers/:id edits an existing driver', (done) => {
     const driver = new Driver({ email: 'old@test.com', driving: false })
     const newEmail = 'new@test.com'
 
@@ -38,6 +38,23 @@ describe('Drivers controller', () => {
             done()
           })
       })
+    })
+  })
+
+  it('DELETE requests to /api/drivers/:id deletes an existing driver', (done) => {
+    const driver = new Driver({ email: 'test@test.com' })
+    const { _id } = driver
+
+    driver.save().then(() => {
+      request(app)
+        .delete(`/api/drivers/${_id}`)
+        .end(() => {
+          Driver.findById(_id)
+            .then((driver) => {
+              assert(driver === null)
+              done()
+            })
+        })
     })
   })
 })

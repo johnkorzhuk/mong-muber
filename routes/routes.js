@@ -7,6 +7,7 @@ router
   .get('/', driverController.greeting)
   .post('/drivers', driverController.create)
   .put('/drivers/:id', driverController.edit)
+  .delete('/drivers/:id', driverController.delete)
   .use((err, req, res, next) => {
     res.status(422).send({ error: err.message })
   })
