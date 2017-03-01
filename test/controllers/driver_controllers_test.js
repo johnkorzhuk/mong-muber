@@ -19,4 +19,25 @@ describe('Drivers controller', () => {
         })
     })
   })
+
+  it('PUT requests to /api/drivers edits an existing driver', (done) => {
+    const driver = new Driver({ email: 'old@test.com' })
+    const newEmail = 'new@test.com'
+
+    driver.save().then(() => {
+      request(app)
+      .put(`/api/drivers/${driver._id}`)
+      .send({
+        email: newEmail,
+        driving: true
+      })
+      .end(() => {
+        Driver.findById(driver._id)
+          .then((drisver) => {
+            assert(drisver.email === newEmail && drisver.driving === true)
+            done()
+          })
+      })
+    })
+  })
 })
