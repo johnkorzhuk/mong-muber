@@ -1,7 +1,11 @@
-const mongoose = require('mongoose')
-const { Schema } = mongoose
 
-mongoose.Promise = global.Promise
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+
+const PointSchema = new Schema({
+  coordinates: { type: [Number], index: '2dsphere' },
+  type: { type: String, default: 'Point' }
+})
 
 const DriverSchema = new Schema({
   email: {
@@ -11,7 +15,8 @@ const DriverSchema = new Schema({
   driving: {
     type: Boolean,
     default: false
-  }
+  },
+  geometry: PointSchema
 })
 
 module.exports = mongoose.model('driver', DriverSchema)

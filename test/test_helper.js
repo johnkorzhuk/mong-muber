@@ -13,6 +13,7 @@ before((done) => {
 beforeEach((done) => {
   const { drivers } = mongoose.connection.collections
   drivers.drop()
+    .then(() => drivers.ensureIndex({ 'geometry.coordinates': '2dsphere' }))
     .then(() => done())
     // first time this test runs. There won't be a collection to drop
     .catch(() => done())
